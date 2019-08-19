@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/pygments/native.min.css">
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://bannedit.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bannedit's musings Atom">
+
+    <link href="https://bannedit.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="bannedit's musings RSS">
+
+    <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
+
+
+
+<meta name="author" content="bannedit" />
+<meta name="description" content="Recently, I purchased a personal license of binary ninja to play around with the API. However, I was also interested in tinkering around with Lighthouse since I&#39;ve been fairly interested in fuzzing and code coverage lately. Sadly, Lighthouse uses PyQT5. Anyone who has ever tried to get PyQT5 working on OSX knows how big of a headache that can be. It typically involved downloading and compiling source code. Luckily, Lighthouse also supports PySide. PySide is available via brew and is much simpler to install. However, some minor patching is still required since the version installed by brew is PySide2." />
+<meta name="keywords" content="binary ninja, binja, lighthouse, reversing, code coverage, plugins">
+<meta name="twitter:site"    content="@bannedit0">
+<meta name="twitter:creator" content="@bannedit">
+<meta name="twitter:title"   content="Binary Ninja and Lighthouse on OSX">
+
+<meta name="twitter:description" content="Recently, I purchased a personal license of binary ninja to play around with the API. However, I was also interested in tinkering around with Lighthouse since I&#39;ve been fairly interested in fuzzing and code coverage lately. Sadly, Lighthouse uses PyQT5. Anyone who has ever tried to get PyQT5 working on OSX knows how big of a headache that can be. It typically involved downloading and compiling source code. Luckily, Lighthouse also supports PySide. PySide is available via brew and is much simpler to install. However, some minor patching is still required since the version installed by brew is PySide2."/>
+<meta property="og:site_name" content="bannedit's musings"/>
+<meta property="og:title" content="Binary Ninja and Lighthouse on OSX"/>
+<meta property="og:description" content="Recently, I purchased a personal license of binary ninja to play around with the API. However, I was also interested in tinkering around with Lighthouse since I&#39;ve been fairly interested in fuzzing and code coverage lately. Sadly, Lighthouse uses PyQT5. Anyone who has ever tried to get PyQT5 working on OSX knows how big of a headache that can be. It typically involved downloading and compiling source code. Luckily, Lighthouse also supports PySide. PySide is available via brew and is much simpler to install. However, some minor patching is still required since the version installed by brew is PySide2."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://bannedit.github.io/drafts/Binary-Ninja-and-Lighthouse-on-OSX.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-08-19 21:00:00-04:00"/>
+<meta property="article:modified_time" content="2017-11-27 12:30:00-05:00"/>
+<meta property="article:author" content="https://bannedit.github.io/author/bannedit.html">
+<meta property="article:section" content="Development"/>
+<meta property="article:tag" content="binary ninja"/>
+<meta property="article:tag" content="binja"/>
+<meta property="article:tag" content="lighthouse"/>
+<meta property="article:tag" content="reversing"/>
+<meta property="article:tag" content="code coverage"/>
+<meta property="article:tag" content="plugins"/>
+<meta property="og:image" content="https://bannedit.github.io/resources/profile.png">
+
+  <title>bannedit's musings &ndash; Binary Ninja and Lighthouse on OSX</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://bannedit.github.io">
+        <img src="resources/profile.png" alt="bannedit" title="bannedit">
+      </a>
+      <h1><a href="https://bannedit.github.io">bannedit</a></h1>
+
+<p>Vulnerability Researcher</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">Blog</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/categories.html">Categories</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+          <li><a href="/feeds/all.rss.xml">RSS</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://github.com/bannedit"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/bannedit0"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/david-rude"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-rss" href="feeds/all.rss.xml"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <h3 class="sitename">bannedit's musings</h3>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="Binary-Ninja-and-Lighthouse-on-OSX">Binary Ninja and Lighthouse on OSX</h1>
+    <p>
+          Posted on Mon 19 August 2019 in <a href="https://bannedit.github.io/category/development.html">Development</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h3>Introduction</h3>
+<p>Recently, I purchased a personal license of binary ninja to play around with the API. However, I was also interested in tinkering around with Lighthouse since I've been fairly interested in fuzzing and code coverage lately.</p>
+<p>Sadly, Lighthouse uses PyQT5. Anyone who has ever tried to get PyQT5 working on OSX knows how big of a headache that can be. It typically involved downloading and compiling source code.</p>
+<p>Luckily, Lighthouse also supports PySide. PySide is available via brew and is much simpler to install. However, some minor patching is still required since the version installed by brew is PySide2.</p>
+<h3>Lets Get To Work</h3>
+<p>To install PySide2 via brew simply run the following command:</p>
+<div class="highlight"><pre><span></span>$ brew install pyside
+</pre></div>
+
+
+<p>You can double check the installation by testing the import in python.</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">python</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">PySide2</span>
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+
+
+<p>The next thing we need to do is point Binary Ninja to our brew python installation. The simplest way to do this is to go to the Preferences-&gt;Settings menu option and click on Python in the left panel. Now on the right should be a drop down option. The version needed should look something like: </p>
+<p><em>/usr/local/Cellar/python@2/2.7.16/Frameworks/Python.framework/Versions/2.7/Python</em></p>
+<p>Finally, we need to slightly patch Lighthouse. Normally Lighthouse imports PySide instead of PySide2. So this is a pretty simple patch all that is required is to reference PySide2 in the import statements instead of PySide.</p>
+<p><strong>plugin/lighthouse/util/qt/shim.py</strong></p>
+<div class="highlight"><pre><span></span><span class="mi">51</span><span class="p">:</span> <span class="c1"># if PyQt5 did not import, try to load PySide</span>
+<span class="mi">52</span><span class="p">:</span> <span class="k">if</span> <span class="n">QT_AVAILABLE</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+<span class="mi">53</span><span class="p">:</span>    <span class="k">try</span><span class="p">:</span>
+<span class="mi">54</span><span class="p">:</span>        <span class="kn">import</span> <span class="nn">PySide2.QtGui</span> <span class="kn">as</span> <span class="nn">QtGui</span>
+<span class="mi">55</span><span class="p">:</span>        <span class="kn">import</span> <span class="nn">PySide2.QtCore</span> <span class="kn">as</span> <span class="nn">QtCore</span>
+<span class="mi">56</span><span class="p">:</span>        <span class="kn">import</span> <span class="nn">PySide2.QtWidgets</span> <span class="kn">as</span> <span class="nn">QtWidgets</span>
+</pre></div>
+
+
+<p>Now if we move the contents of the plugin directory into ~/Library/Application Support/Binary Ninja/plugins/</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> lighthouse/plugin
+$ cp -r . <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Application Support/Binary Ninja/plugins&quot;</span>
+</pre></div>
+
+
+<p>The plugins directory should now look like this:</p>
+<div class="highlight"><pre><span></span>$ ls <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Application Support/Binary Ninja/plugins&quot;</span>
+lighthouse/            lighthouse_plugin.py
+</pre></div>
+
+
+<p>Now if we load up Binary Ninja we should see that everything works as expected. Obviously, getting PyQT5 working is the most ideal situation since several other useful plugins seem to be using it as well. So, with that in mind I plan on circling back to this in an effort to get PyQT5 working. I will try to do a follow up write up on the process involved in getting everything working for that as well.</p>
+<h3>Conclusion</h3>
+<p>Lighthouse is a great plugin. Having it available in binary ninja should prove very useful. I was initially disappointed that Lighthouse didn't just work out of the box, but with a little work I managed to get it working and plan on using it a lot in the future. Hopefully, other people find this useful as well.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://bannedit.github.io/tag/binary-ninja.html">binary ninja</a>
+      <a href="https://bannedit.github.io/tag/binja.html">binja</a>
+      <a href="https://bannedit.github.io/tag/lighthouse.html">lighthouse</a>
+      <a href="https://bannedit.github.io/tag/reversing.html">reversing</a>
+      <a href="https://bannedit.github.io/tag/code-coverage.html">code coverage</a>
+      <a href="https://bannedit.github.io/tag/plugins.html">plugins</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+  </main>
+</body>
+</html>
