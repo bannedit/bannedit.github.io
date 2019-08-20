@@ -95,7 +95,7 @@
         {% if SITELOGO %}
         <img src="{{ SITELOGO }}" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
         {% else %}
-        <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
+        <img src="{{ SITEURL }}/{{ SITELOGO }}" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
         {% endif %}
       </a>
       <h1><a href="{{ SITEURL }}">{{ SITETITLE }}</a></h1>
@@ -113,7 +113,7 @@
           {% endfor %}
 
           {% for name, link in LINKS %}
-          <li><a href="{{ link }}">{{ name }}</a></li>
+          <li><a href="{{ link }}">{{ SITEURL }}/{{ name }}</a></li>
           {% endfor %}
         </ul>
       </nav>
