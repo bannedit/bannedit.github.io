@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/pygments/native.min.css">
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://bannedit.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bannedit's musings Atom">
+
+    <link href="https://bannedit.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="bannedit's musings RSS">
+
+    <link rel="shortcut icon" href="https://bannedit.github.io/resources/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://bannedit.github.io/resources/favicon.ico" type="image/x-icon">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146085259-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146085259-1');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="bannedit" />
+<meta name="description" content="Virtual Machine (VM) detection is nothing new. Malware has been doing it for over a decade now. Over time the techniques have advanced as defenders learned new ways of avoiding VM detection. A while back a friend and I were working on a project related to exploit delivery via a web application for redteaming purposes. I wanted a way to fingerprint visitors of the site and hash the fingerprint data so I could look for potential repeat visitors. While investigating fingerprinting I stumbled upon something pretty interesting. I was looking at some code that collected information about WebGL capabilities. I quickly realized that some of the fingerprinting information could be useful for VM detection because vendor names were exposed. In this particular instance the string &#34;VMWare&#34; was contained within the WebGL information. After some more testing I also discovered that VirtualBox reported the same kind of information. Once I realized it was potentially possible to detect VMs from the browser I started to dig deeper and began searching for other research related to this discovery. I found a pretty well researched academic paper [1] related to tracking users across multiple browsers. This gave me some other potential techniques that could be applied to VM detection. The end goal of this research is to have multiple techniques for VM detection. Multiple techniques lead to much more accurate detection. Since some techniques are more false-positive prone than others, a weighting system can be applied to the detection capabilities. This allows us to generate detection confidence scoring. This can help account for inaccuracies of certain detection methods. Given enough testing and data it would then be possible to come up with a reasonable threshold value. If a browser scores above the threshold then it would most likely be within a VM. Alternatively, if the browser scored below the threshold value it could be considered to be running on physical hardware." />
+<meta name="keywords" content="research, vm detection, webgl">
+<meta property="og:site_name" content="bannedit's musings"/>
+<meta property="og:title" content="Virtual Machine Detection In The Browser"/>
+<meta property="og:description" content="Virtual Machine (VM) detection is nothing new. Malware has been doing it for over a decade now. Over time the techniques have advanced as defenders learned new ways of avoiding VM detection. A while back a friend and I were working on a project related to exploit delivery via a web application for redteaming purposes. I wanted a way to fingerprint visitors of the site and hash the fingerprint data so I could look for potential repeat visitors. While investigating fingerprinting I stumbled upon something pretty interesting. I was looking at some code that collected information about WebGL capabilities. I quickly realized that some of the fingerprinting information could be useful for VM detection because vendor names were exposed. In this particular instance the string &#34;VMWare&#34; was contained within the WebGL information. After some more testing I also discovered that VirtualBox reported the same kind of information. Once I realized it was potentially possible to detect VMs from the browser I started to dig deeper and began searching for other research related to this discovery. I found a pretty well researched academic paper [1] related to tracking users across multiple browsers. This gave me some other potential techniques that could be applied to VM detection. The end goal of this research is to have multiple techniques for VM detection. Multiple techniques lead to much more accurate detection. Since some techniques are more false-positive prone than others, a weighting system can be applied to the detection capabilities. This allows us to generate detection confidence scoring. This can help account for inaccuracies of certain detection methods. Given enough testing and data it would then be possible to come up with a reasonable threshold value. If a browser scores above the threshold then it would most likely be within a VM. Alternatively, if the browser scored below the threshold value it could be considered to be running on physical hardware."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://bannedit.github.io/Virtual-Machine-Detection-In-The-Browser.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="https://bannedit.github.io/resources/profile.png"/>
+<meta property="article:published_time" content="2019-08-20 05:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://bannedit.github.io/author/bannedit.html"/>
+<meta property="article:section" content="Research"/>
+<meta property="article:tag" content="research"/>
+<meta property="article:tag" content="vm detection"/>
+<meta property="article:tag" content="webgl"/>
+
+  <title>bannedit's musings &ndash; Virtual Machine Detection In The Browser</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://bannedit.github.io">
+        <img src="resources/profile.png" alt="bannedit" title="bannedit">
+      </a>
+      <h1><a href="https://bannedit.github.io">bannedit</a></h1>
+
+<p>Vulnerability Researcher</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">Blog</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/categories.html">Categories</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+          <li><a href="/feeds/all.rss.xml">RSS</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://github.com/bannedit"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/bannedit0"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/david-rude"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-rss" href="feeds/all.rss.xml"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <h3 class="sitename">bannedit's musings</h3>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="Virtual-Machine-Detection-In-The-Browser">Virtual Machine Detection In The Browser</h1>
+    <p>
+          Posted on Tue 20 August 2019 in <a href="https://bannedit.github.io/category/research.html">Research</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h3>Introduction</h3>
+<p>Virtual Machine (VM) detection is nothing new. Malware has been doing it for over a decade now. Over time the techniques have advanced as defenders learned new ways of avoiding VM detection.</p>
+<p>A while back a friend and I were working on a project related to exploit delivery via a web application for redteaming purposes. I wanted a way to fingerprint visitors of the site and hash the fingerprint data so I could look for potential repeat visitors. While investigating fingerprinting I stumbled upon something pretty interesting. I was looking at some code that collected information about WebGL capabilities. I quickly realized that some of the fingerprinting information could be useful for VM detection because vendor names were exposed. In this particular instance the string "VMWare" was contained within the WebGL information. After some more testing I also discovered that VirtualBox reported the same kind of information. </p>
+<p>Once I realized it was potentially possible to detect VMs from the browser I started to dig deeper and began searching for other research related to this discovery. I found a pretty well researched academic paper <a href="http://yinzhicao.org/TrackingFree/crossbrowsertracking_NDSS17.pdf">[1]</a> related to tracking users across multiple browsers. This gave me some other potential techniques that could be applied to VM detection.</p>
+<p>The end goal of this research is to have multiple techniques for VM detection. Multiple techniques lead to much more accurate detection. Since some techniques are more false-positive prone than others, a weighting system can be applied to the detection capabilities. This allows us to generate detection confidence scoring. This can help account for inaccuracies of certain detection methods. Given enough testing and data it would then be possible to come up with a reasonable threshold value. If a browser scores above the threshold then it would most likely be within a VM. Alternatively, if the browser scored below the threshold value it could be considered to be running on physical hardware.</p>
+<h3>Techniques</h3>
+<p>Now that I have covered some of the background information and history leading up to this blog post we can start to dig into the actual techniques.</p>
+<p>As mentioned prior in the introduction, WebGL can provide a lot of information about the OpenGL impelementation including vendor information. The WEBGL_debug_renderer_info extention <a href="https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info">[2]</a> can be used to query for debug information such as the WebGL vendor and rendered.</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">debugInfo</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getExtension</span><span class="p">(</span><span class="s1">&#39;WEBGL_debug_renderer_info&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">vendor</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="nx">debugInfo</span><span class="p">.</span><span class="nx">UNMASKED_VENDOR_WEBGL</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">renderer</span> <span class="o">=</span> <span class="nx">gl</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="nx">debugInfo</span><span class="p">.</span><span class="nx">UNMASKED_RENDERER_WEBGL</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">vendor</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">renderer</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Additionally, extension availability can be queried using the <strong><em>getExtension</em></strong> method on a WebGL context. I have not fully explored this avenue but it might be possible to detect certain WebGL implementations provided by VMs based on the extensions available. Though this idea is likely very false-positive prone.</p>
+<p>Below is a screenshot from <a href="https://webglreport.com">[3]</a> WebGLReport a website dedicated to fingerprinting WebGL.</p>
+<blockquote>
+<p><img alt="alt-text" src="resources/VirtualBox-VM-Win10-Chrome.png" title="VirtualBox Windows 10 x64 VM Google Chrome Visiting webglreport.com">
+<strong><em>VirtualBox Windows 10 x64 VM Google Chrome Visiting webglreport.com</em></strong></p>
+</blockquote>
+<p>Now, it is important to note that this depends on how the VM is configured. In Virtual Box for example, setting the graphics controller setting under Display to VMSVGA will report cause WebGL to use CPU based implementations of OpenGL which is browser dependent. However, this could still be a useful indicator that the client machine is running in a VM because most modern hardware has integrated GPUs and can provide access to OpenGL natively. Just keep in mind that CPU based OpenGL implementations do not necessarily mean it is a VM outright.</p>
+<blockquote>
+<p><img alt="alt-text" src="resources/VirtualBox-VM-Win10-Chrome-VMSVGA.png" title="VirtualBox Windows 10 x64 VM Google Chrome Using VMSVGA">
+<strong><em>VirtualBox Windows 10 x64 VM Google Chrome Using VMSVGA Visiting webglreport.com</em></strong></p>
+</blockquote>
+<p>This screenshot depicts Google Chrome utilizing the CPU based OpenGL implementation renderer Google SwiftShader <a href="https://github.com/google/swiftshader">[4]</a>.</p>
+<p>Another technique seen in normal malware is to determine the screen width and height. This can be achived in Javascript as well. Additionally, color depth and bits per pixel are other potentially good indicators related to the display.</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">color_depth</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">colorDepth</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bitspp</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">pixelDepth</span><span class="p">;</span>
+</pre></div>
+
+
+<p>More details on the screen object can be found at <a href="https://www.w3schools.com/jsref/obj_screen.asp">[5]</a>.</p>
+<p>Can we detect the amount of RAM on the client? You bet. Again using Javascript we can determine roughly the amount of RAM available on the browser. One quirk to note here is that the browser will only report RAM values in gigabytes (gb). It also has a quirk where it will only report upto 8gb and as low as 256mb (0.25gb). These ranges of values however, are still enough to use as a VM detection method. Most physical workstations these days come with at least 8gb of RAM. Detecting smaller amounts of RAM such as 2gb or less would be a good indicator the client browser is in a VM. The specification for the Device Memory can be found at <a href="https://www.w3.org/TR/device-memory/">[6]</a></p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ram</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">deviceMemory</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Finally, the last technique I will be covering detects the number of CPU cores. This is done by performing timing attacks using multiple web workers running simultaniously. During my testing of this technique I found it to be very accurate. I tested this concept out using the <a href="https://oswg.oftn.org/projects/core-estimator/demo/">[7]</a> Core Estimator Demo site. A small number of CPU cores can be a decent VM indicator and has been used by malware in the past. Core Estimator also provides the Javascript libraries on github <a href="https://github.com/oftn-oswg/core-estimator">[8]</a>.</p>
+<blockquote>
+<p><img alt="alt-text" src="resources/VirtualBox-VM-Win10-Chrome-2-Cores.png" title="VirtualBox Windows 10 x64 VM Chrome With 2 CPU Cores">
+<strong><em>VirtualBox Windows 10 x64 VM Google Chrome 2 CPU Cores Tested with Core Estimator</em></strong></p>
+</blockquote>
+<h3>Conclusion</h3>
+<p>This blog post covered four unique VM detection capabilities that can be performed from Javascript. When I first discovered these techniques my initial thought was to apply the concepts toward VM detection. Hopefully, both defenders and offensive security professions can find something useful to apply these techniques toward.</p>
+<p>It is interesting to see that academics and various other researchers have applied some of the same concepts toward fingerprinting and privacy issues. </p>
+<h3>References</h3>
+<ol>
+<li>
+<p>(Cross-)Browser Fingerprinting via OS and
+Hardware Level Features <a href="http://yinzhicao.org/TrackingFree/crossbrowsertracking_NDSS17.pdf">http://yinzhicao.org/TrackingFree/crossbrowsertracking_NDSS17.pdf</a></p>
+</li>
+<li>
+<p>MDN web-docs WEBGL_debug_renderer_info <a href="https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info">https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info</a></p>
+</li>
+<li>
+<p>WebGL Report <a href="https://webglreport.com">https://webglreport.com</a></p>
+</li>
+<li>
+<p>Google Swiftshader Github <a href="https://github.com/google/swiftshader">https://github.com/google/swiftshader</a>  </p>
+</li>
+<li>
+<p>W3 Device Memory Specification <a href="https://www.w3.org/TR/device-memory/">https://www.w3.org/TR/device-memory/</a></p>
+</li>
+<li>
+<p>W3 Schools - The Screen Object <a href="https://www.w3schools.com/jsref/obj_screen.asp">https://www.w3schools.com/jsref/obj_screen.asp</a></p>
+</li>
+<li>
+<p>Core Estimator Demo <a href="https://oswg.oftn.org/projects/core-estimator/demo/">https://oswg.oftn.org/projects/core-estimator/demo/</a></p>
+</li>
+<li>
+<p>Core Estimator Github <a href="https://github.com/oftn-oswg/core-estimator">https://github.com/oftn-oswg/core-estimator</a></p>
+</li>
+</ol>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://bannedit.github.io/tag/research.html">research</a>
+      <a href="https://bannedit.github.io/tag/vm-detection.html">vm detection</a>
+      <a href="https://bannedit.github.io/tag/webgl.html">webgl</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+  </main>
+</body>
+</html>
