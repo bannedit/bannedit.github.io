@@ -5,11 +5,11 @@ Tags: research, rop, exploit dev
 Slug: Automated-ROP-Chain-Integrity
 Authors: bannedit
 Status: Published
-Summary:<p>In software engineering unit testing has become the norm. In the world of exploit development testing and automation is lacking. This blog post will introduce a technique for automated testing of Return Oriented Programming (ROP) chain integrity.</p><p>Admittedly, automation in exploit development does exist, there are tools such as mona <a href=https://github.com/corelan/mona>[1]</a> and rop finding tools <a href=https://github.com/JonathanSalwan/ROPgadget>[2]</a> <a href=https://github.com/sashs/Ropper>[3]</a> that make the process a lot simpler than it once was. However, the point of this blog is to show that automation can go beyond automating the tasks involved in exploit development and also be applied to what happens next, maintaining working exploit code.</p>
+Summary:<p>In software engineering unit testing has become the norm. In the world of exploit development, testing and automation is lacking. This blog post will introduce a technique for automated testing of Return Oriented Programming (ROP) chain integrity.</p><p>Admittedly, automation in exploit development does exist, there are tools such as mona <a href=https://github.com/corelan/mona>[1]</a> and rop finding tools <a href=https://github.com/JonathanSalwan/ROPgadget>[2]</a> <a href=https://github.com/sashs/Ropper>[3]</a> that make the process a lot simpler than it once was. However, the point of this blog is to show that automation can go beyond automating the tasks involved in exploit development and also be applied to what happens next, maintaining working exploit code.</p>
 
 ### Introduction
 
-In software engineering unit testing has become the norm. In the world of exploit development testing and automation is lacking. This blog post will introduce a technique for automated testing of Return Oriented Programming (ROP) chain integrity.
+In software engineering unit testing has become the norm. In the world of exploit development, testing and automation is lacking. This blog post will introduce a technique for automated testing of Return Oriented Programming (ROP) chain integrity.
 
 Admittedly, automation in exploit development does exist, there are tools such as mona [[1]](https://github.com/corelan/mona) and rop finding tools [[2]](https://github.com/JonathanSalwan/ROPgadget) [[3]](https://github.com/sashs/Ropper) that make the process a lot simpler than it once was. However, the point of this blog is to show that automation can go beyond automating the tasks involved in exploit development and also be applied to what happens next, maintaining working exploit code.
 
