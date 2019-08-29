@@ -116,8 +116,8 @@
 <p>Return Oriented Programming is an exploitation technique that uses code that already exists within an application to perform useful actions. Typically, a ROP chain will simply change the protection flags on a page of memory to be executable. Alternatively, some ROP chains might allocate memory as executable and copy shellcode into the allocated memory. However, a ROP chain can perform any action that can be constructed from the code within the target process.</p>
 <p>ROP chains are comprised of gadgets, or small chunks of code that are followed by a return instruction. These gadgets are chained together by manipulating stack memory and constructing stack frames.</p>
 <blockquote>
-<p>![alt-text](resources/rop.png "Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow"
- <strong><em>Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: <a href="https://devel0pment.de/?p=366">https://devel0pment.de/?p=366</a></em></strong></p>
+<p>![alt-text](resources/rop.png "Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow"</p>
+<p><strong><em>Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: <a href="https://devel0pment.de/?p=366">https://devel0pment.de/?p=366</a></em></strong></p>
 </blockquote>
 <p>The above illustration depicts the stack memory at the time of exploiting a stack based buffer overflow. As can be seen a ROP chain is simply a chain of gadgets that reference code already existing in the vulnerable process. In this instance the ROP payload is building the arguments necessary to call the sys_execve system call on a 32bit Linux system. </p>
 <p>The gadgets:
@@ -134,8 +134,8 @@
 <p>Now that we know what a debug gadget is and how to find one, we can discuss the proposed technique.</p>
 <p>The technique is to loop over execution of the exploit swapping out gadgets with debug gadgets. After each iteration we replace the previous gadget with the original. We can achieve everything we need using a scriptable debugger, such as, <a href="https://github.com/bannedit/cdb">cdb</a>, <a href="https://github.com/MarioVilas/winappdbg">winappdbg</a>, <a href="https://github.com/pwndbg/pwndbg">pwndbg</a>, just to name a few. We can monitor execution via a debugger, and loop over execution by restarting the process.</p>
 <blockquote>
-<p><img alt="alt-text" src="resources/ROP-Chain-Integrity.png" title="ROP Chain Integrity Algorithm"> 
-<strong><em>ROP Chain Integrity Algorithm Iterations Visualized</em></strong></p>
+<p><img alt="alt-text" src="resources/ROP-Chain-Integrity.png" title="ROP Chain Integrity Algorithm"> </p>
+<p><strong><em>ROP Chain Integrity Algorithm Iterations Visualized</em></strong></p>
 </blockquote>
 <p>The above image depicts the ROP chain integrity algorithm in action. This image is using the same ROP chain previously discussed.</p>
 <p>If we hit the breakpoint in the debugger on the first iteration we know that our ROP chain is still being executed, we also know the vulnerability still exists.</p>
