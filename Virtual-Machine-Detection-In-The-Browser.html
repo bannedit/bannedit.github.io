@@ -59,7 +59,7 @@
   <aside>
     <div>
       <a href="https://bannedit.github.io">
-        <img src="resources/profile.png" alt="bannedit" title="bannedit">
+        <img src="https://bannedit.github.io/resources/profile.png" alt="bannedit" title="bannedit">
       </a>
       <h1><a href="https://bannedit.github.io">bannedit</a></h1>
 
@@ -110,7 +110,7 @@
 <p>The end goal of this research is to have multiple techniques for VM detection. Multiple techniques lead to much more accurate detection. Since some techniques are more false-positive prone than others, a weighting system can be applied to the detection capabilities. This allows us to generate detection confidence scoring. This can help account for inaccuracies of certain detection methods. Given enough testing and data it would then be possible to come up with a reasonable threshold value. If a browser scores above the threshold then it would most likely be within a VM. Alternatively, if the browser scored below the threshold value it could be considered to be running on physical hardware.</p>
 <h3>Techniques</h3>
 <p>Now that I have covered some of the background information and history leading up to this blog post we can start to dig into the actual techniques.</p>
-<p>As mentioned prior in the introduction, WebGL can provide a lot of information about the OpenGL impelementation including vendor information. The WEBGL_debug_renderer_info extention <a href="https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info">[2]</a> can be used to query for debug information such as the WebGL vendor and rendered.</p>
+<p>As mentioned prior in the introduction, WebGL can provide a lot of information about the OpenGL implementation including vendor information. The WEBGL_debug_renderer_info extension <a href="https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info">[2]</a> can be used to query for debug information such as the WebGL vendor and rendered.</p>
 <div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;canvas&#39;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">gl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s1">&#39;webgl&#39;</span><span class="p">);</span>
 
@@ -135,7 +135,7 @@
 <strong><em>VirtualBox Windows 10 x64 VM Google Chrome Using VMSVGA Visiting webglreport.com</em></strong></p>
 </blockquote>
 <p>This screenshot depicts Google Chrome utilizing the CPU based OpenGL implementation renderer Google SwiftShader <a href="https://github.com/google/swiftshader">[4]</a>.</p>
-<p>Another technique seen in normal malware is to determine the screen width and height. This can be achived in Javascript as well. Additionally, color depth and bits per pixel are other potentially good indicators related to the display.</p>
+<p>Another technique seen in normal malware is to determine the screen width and height. This can be achieved in Javascript as well. Additionally, color depth and bits per pixel are other potentially good indicators related to the display.</p>
 <div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">color_depth</span> <span class="o">=</span> <span class="nx">screen</span><span class="p">.</span><span class="nx">colorDepth</span><span class="p">;</span>
@@ -144,12 +144,12 @@
 
 
 <p>More details on the screen object can be found at <a href="https://www.w3schools.com/jsref/obj_screen.asp">[5]</a>.</p>
-<p>Can we detect the amount of RAM on the client? You bet. Again using Javascript we can determine roughly the amount of RAM available on the browser. One quirk to note here is that the browser will only report RAM values in gigabytes (gb). It also has a quirk where it will only report upto 8gb and as low as 256mb (0.25gb). These ranges of values however, are still enough to use as a VM detection method. Most physical workstations these days come with at least 8gb of RAM. Detecting smaller amounts of RAM such as 2gb or less would be a good indicator the client browser is in a VM. The specification for the Device Memory can be found at <a href="https://www.w3.org/TR/device-memory/">[6]</a></p>
+<p>Can we detect the amount of RAM on the client? You bet. Again using Javascript we can determine roughly the amount of RAM available on the browser. One quirk to note here is that the browser will only report RAM values in gigabytes (gb). It also has a quirk where it will only report up to 8gb and as low as 256mb (0.25gb). These ranges of values however, are still enough to use as a VM detection method. Most physical workstations these days come with at least 8gb of RAM. Detecting smaller amounts of RAM such as 2gb or less would be a good indicator the client browser is in a VM. The specification for the Device Memory can be found at <a href="https://www.w3.org/TR/device-memory/">[6]</a></p>
 <div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ram</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">deviceMemory</span><span class="p">;</span>
 </pre></div>
 
 
-<p>Finally, the last technique I will be covering detects the number of CPU cores. This is done by performing timing attacks using multiple web workers running simultaniously. During my testing of this technique I found it to be very accurate. I tested this concept out using the <a href="https://oswg.oftn.org/projects/core-estimator/demo/">[7]</a> Core Estimator Demo site. A small number of CPU cores can be a decent VM indicator and has been used by malware in the past. Core Estimator also provides the Javascript libraries on github <a href="https://github.com/oftn-oswg/core-estimator">[8]</a>.</p>
+<p>Finally, the last technique I will be covering detects the number of CPU cores. This is done by performing timing attacks using multiple web workers running simultaneously. During my testing of this technique I found it to be very accurate. I tested this concept out using the <a href="https://oswg.oftn.org/projects/core-estimator/demo/">[7]</a> Core Estimator Demo site. A small number of CPU cores can be a decent VM indicator and has been used by malware in the past. Core Estimator also provides the Javascript libraries on github <a href="https://github.com/oftn-oswg/core-estimator">[8]</a>.</p>
 <blockquote>
 <p><img alt="alt-text" src="resources/VirtualBox-VM-Win10-Chrome-2-Cores.png" title="VirtualBox Windows 10 x64 VM Chrome With 2 CPU Cores">
 <strong><em>VirtualBox Windows 10 x64 VM Google Chrome 2 CPU Cores Tested with Core Estimator</em></strong></p>

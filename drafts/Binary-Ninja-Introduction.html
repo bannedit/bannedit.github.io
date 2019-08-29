@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/pygments/native.min.css">
+  <link rel="stylesheet" type="text/css" href="https://bannedit.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://bannedit.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="bannedit's musings Atom">
+
+    <link href="https://bannedit.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="bannedit's musings RSS">
+
+    <link rel="shortcut icon" href="https://bannedit.github.io/resources/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://bannedit.github.io/resources/favicon.ico" type="image/x-icon">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146085259-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-146085259-1');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="bannedit" />
+<meta name="description" content="Recently, I purchased a personal license for Binary Ninja from Vector 35 LLC. In this post I plan on covering some of the reasons I took the plunge and some of the features of Binary Ninja. Binary Ninja is a binary analysis platform heavily focused on static analysis. With plans for the future of adding features like dynamic analysis, decompilation, and collaboration. Note: some users have already made plugins allowing dynamic analysis possible." />
+<meta name="keywords" content="binary ninja, product review">
+<meta property="og:site_name" content="bannedit's musings"/>
+<meta property="og:title" content="Binary Ninja Introduction"/>
+<meta property="og:description" content="Recently, I purchased a personal license for Binary Ninja from Vector 35 LLC. In this post I plan on covering some of the reasons I took the plunge and some of the features of Binary Ninja. Binary Ninja is a binary analysis platform heavily focused on static analysis. With plans for the future of adding features like dynamic analysis, decompilation, and collaboration. Note: some users have already made plugins allowing dynamic analysis possible."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://bannedit.github.io/drafts/Binary-Ninja-Introduction.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:image" content="https://bannedit.github.io/resources/profile.png"/>
+<meta property="article:published_time" content="2019-08-21 05:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://bannedit.github.io/author/bannedit.html"/>
+<meta property="article:section" content="Research"/>
+<meta property="article:tag" content="binary ninja"/>
+<meta property="article:tag" content="product review"/>
+
+  <title>bannedit's musings &ndash; Binary Ninja Introduction</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://bannedit.github.io">
+        <img src="https://bannedit.github.io/resources/profile.png" alt="bannedit" title="bannedit">
+      </a>
+      <h1><a href="https://bannedit.github.io">bannedit</a></h1>
+
+<p>Vulnerability Researcher</p>
+      <nav>
+        <ul class="list">
+
+          <li><a href="/">Blog</a></li>
+          <li><a href="/archives.html">Archives</a></li>
+          <li><a href="/categories.html">Categories</a></li>
+          <li><a href="/tags.html">Tags</a></li>
+          <li><a href="http://bannedit.github.io/feeds/all.rss.xml">RSS</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://github.com/bannedit"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/bannedit0"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-linkedin" href="https://linkedin.com/in/david-rude"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-rss" href="https://bannedit.github.io/feeds/all.rss.xml"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <h3 class="sitename">bannedit's musings</h3>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="Binary-Ninja-Introduction">Binary Ninja Introduction</h1>
+    <p>
+          Posted on Wed 21 August 2019 in <a href="https://bannedit.github.io/category/research.html">Research</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h3>Introduction</h3>
+<p>Recently, I purchased a personal license for Binary Ninja from Vector 35 LLC. In this post I plan on covering some of the reasons I took the plunge and some of the features of Binary Ninja.</p>
+<p>Binary Ninja is a binary analysis platform heavily focused on static analysis. With plans for the future of adding features like dynamic analysis, decompilation, and collaboration. Note: some users have already made plugins allowing dynamic analysis possible.</p>
+<p>Before diving too deep into this blog post I just want to point out I am making an attempt to avoid comparisons to other products that fall into the same general product space. I will leave it up to the reader to make decisions based on their own requirements for tooling and intentions. I am simply writing about my experiences, and my reasoning for going with Binary Ninja as it applies to my use cases (Vulnerability Research and Exploit Development). It is totally possible that your use case will have a lot more specific requirements than mine. If that is the case Binary Ninja might not be right for you, but I urge you to at least give it a try and look into it. These are all my opinions and the reader is encouraged to form their own opinions.</p>
+<h3>Positives</h3>
+<p>For me the decision to purchase Binary Ninja boiled down to a few different reasons. Firstly, the price point. At the time of writing this post a personal license costs $149 USD. This is a pretty reasonable price considering all that Binary Ninja has to offer.</p>
+<p>It is worth noting that for the price point you also get a version of Binary Ninja for OSX, Linux, and Windows. This is very convenient for someone who uses all three operating systems on a regular basis.</p>
+<p>Secondly, the licensing model fits my needs very nicely. I plan on bug hunting in an effort to sell my research to bug bounty programs. The licensing allows me to purchase a personal license and eventually upgrade to commercial when I start making enough money from this endeavor to afford one on a regular basis. More about this can be found on the Binary Ninja FAQ page <a href="http://faq.binary.ninja/en/what-do-you-consider-commercial-use-u7qQPa444f6Qf7JCQ">[1]</a>. </p>
+<p>Another big selling point for me was the API. The API provides a very powerful capabilities for plugin authors. Also, just looking at the API documentation <a href="https://api.binary.ninja/">[2]</a> it is clear a lot of time and thought went into the design and development of the API. Everything is well organized, clearly named, well documented, and in a lot of cases the documentation provides usage examples. You can even look at the source code for much of the API.</p>
+<p>The combination of a powerful API and the innovative Binary Ninja Intermediate Languages (BNIL) is yet again another huge selling point in my opinion. Binary Ninja translates assembly code to an initial Intermediate Language (IL) that can then be used to translate to other IL forms representing different layers of abstraction from the original assembly code. BNIL is well designed and easy to lift in comparison to other IL languages that are very verbose, complex, and hard to understand. </p>
+<h3>Negatives</h3>
+<p>I want to be as transparent as possible here. I enjoy using Binary Ninja but I also realize it might not be the perfect tool for everybody. It has a lot of features that fit my use cases which are vulnerability research, exploit development and CTFs. In other words, your milage may vary. I will attempt to list some of the things I have found lacking so far. This might not be all encompassing so do your research if you have a specific use case in mind.</p>
+<p>While Binary Ninja currently falls short in some areas, for example function matching, full PDB support (It does do a decent job but is lacking some aspects of support for PDB symbols), and limited architecture support (currently it supports roughly 11 CPU architectures, some via plugins). Lack of floating point operation support for BNIL. If any of these issues are a deal breaker for you, I suggest checking back regularly as development is moving quickly. Also, keep in mind there are plenty of things Binary Ninja offers other tools simply do not.</p>
+<p>Early on it was pretty clear that the developers of Binary Ninja were CTF players. A lot of the features are geared towards exploitation and CTF like challenges. If your particular use case does not fall in this category it might be hard to fit Binary Ninja into your normal work flow. They have been slowly expanding the capabilities to fit more reversing tasks and workflows. For example: Binary Ninja might not be the best tool for analyzing complex malware. Vector35 has even stated they have not fully tested Binary Ninja against potential adversarial binaries.   </p>
+<p>The Vector35 team have proven to me in a very short time, based on my interactions with them on the support slack channel, that they are extremely dedicated to consistently improving the product. Additionally, the community has been great. The community is very active and always producing cool plugins and features. And as I mentioned above, the price point plus the powerful API allows capable users to overcome a vast majority of these short comings if they truly want to spend the time to do so.  </p>
+<h3>Features</h3>
+<p>Now that I have covered some of the selling points of Binary Ninja that I found attractive, and some of the negative aspects, lets dig into some of the features a bit. </p>
+<h4>API</h4>
+<h4>BNIL</h4>
+<p>BNIL is a pretty innovative approach to IL. Rather than create a single IL language, BNIL is comprised of multiple IL abstraction layers Low Level Intermediate Langauge (LLIL) and Medium Level Intermediate Language (MLIL) with High Level Intermediate Language (HLIL) still in development. This means that there are different levels of abstraction and the user can pick and choose the one that best suites their needs for any given purpose.</p>
+<blockquote>
+<p><img alt="alt-text" src="https://docs.binary.ninja/images/BNIL.png">
+<strong><em>Binary Ninja Intermediate Language Abstraction Flow</em></strong></p>
+</blockquote>
+<p>Additionally, Binary Ninja has introduced Single Static Assignment (SSA) forms for each IL. This is useful for various applications such as emulation, SMT solving, and Taint Analysis.</p>
+<p>For me BNIL was a hugely attractive, as I had read a few blog posts on modeling vulnerabilities <a href="https://blog.trailofbits.com/2018/04/04/vulnerability-modeling-with-binary-ninja/">[4]</a> <a href="https://www.zerodayinitiative.com/blog/2019/7/16/mindshare-automated-bug-hunting-by-modeling-vulnerable-code">[7]</a> in Binary Ninja. I had always had the idea writing a library of vulnerability detections for binary code. And from the looks of it BNIL seems like a good place to start.</p>
+<h4>Customization</h4>
+<p>It is obviously apparent a lot of thought has gone into making things as customizable as possible. From keybindings to themes, Binary Ninja has you covered.</p>
+<p>Currently there are roughly 450 actions you can create custom keybindings for in Binary Ninja. Jordan Wiens (Vector35) went so far as to create custom keybindings that mimic VIM motions <a href="https://gist.github.com/psifertex/3f6303120196dcf520e53133418c4ba8">[6]</a>.</p>
+<p>I know on the surface it might seem superficial, but having a comfortable working environment goes a long way. For me themes are a big deal, if I am spending a lot of time staring at a computer screen I much prefer looking at something that is easy on the eyes.</p>
+<p>Binary Ninja happens to come with a nice default dark theme. But Binary Ninja also has a ton of community created themes [[5]], including the common base16 themes VIM users might expect.</p>
+<blockquote>
+<p><img alt="alt-text" src="https://binary.ninja/images/content/slide_fruits.png">
+<strong><em>Binary Ninja Default Theme</em></strong></p>
+</blockquote>
+<h3>Conclusion</h3>
+<p>Binary Ninja is a great product. It has a ton of nice features and offers the power to customize and extend almost everything about it. </p>
+<p>While Binary Ninja might not be for everybody, I think it is an up and coming product this market space has needed for some time now.</p>
+<h3>References</h3>
+<ol>
+<li>Binary Ninja FAQ <a href="http://faq.binary.ninja/en/what-do-you-consider-commercial-use-u7qQPa444f6Qf7JCQ">http://faq.binary.ninja/en/what-do-you-consider-commercial-use-u7qQPa444f6Qf7JCQ</a></li>
+<li>Binary Ninja API <a href="https://api.binary.ninja/">https://api.binary.ninja/</a></li>
+<li>Binary Ninja Demo <a href="https://binary.ninja/demo/">https://binary.ninja/demo/</a> </li>
+<li>Be a Binary Rockstar @ Infiltrate 2017 <a href="https://vimeo.com/215511922">https://vimeo.com/215511922</a></li>
+<li>Vulnerability Modeling with Binary Ninja - Josh Watson <a href="https://blog.trailofbits.com/2018/04/04/vulnerability-modeling-with-binary-ninja/">https://blog.trailofbits.com/2018/04/04/vulnerability-modeling-with-binary-ninja/</a></li>
+<li>Vector 35 Community Themes github <a href="https://github.com/Vector35/community-themes">https://github.com/Vector35/community-themes</a></li>
+<li>psifertex VIM Keybinds Gist <a href="https://gist.github.com/psifertex/3f6303120196dcf520e53133418c4ba8">https://gist.github.com/psifertex/3f6303120196dcf520e53133418c4ba8</a></li>
+<li>MindShaRE: Automated Bug Hunting By Modeling Vulnerable Code - Jasiel Spelman <a href="https://www.zerodayinitiative.com/blog/2019/7/16/mindshare-automated-bug-hunting-by-modeling-vulnerable-code">https://www.zerodayinitiative.com/blog/2019/7/16 mindshare-automated-bug-hunting-by-modeling-vulnerable-code</a></li>
+</ol>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://bannedit.github.io/tag/binary-ninja.html">binary ninja</a>
+      <a href="https://bannedit.github.io/tag/product-review.html">product review</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+  </main>
+</body>
+</html>
