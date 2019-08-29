@@ -29,8 +29,8 @@
 &lt;p&gt;Now that we know what a debug gadget is and how to find one, we can discuss the proposed technique.&lt;/p&gt;
 &lt;p&gt;The technique is to loop over execution of the exploit swapping out gadgets with debug gadgets. After each iteration we replace the previous gadget with the original. We can achieve everything we need using a scriptable debugger, such as, &lt;a href="https://github.com/bannedit/cdb"&gt;cdb&lt;/a&gt;, &lt;a href="https://github.com/MarioVilas/winappdbg"&gt;winappdbg&lt;/a&gt;, &lt;a href="https://github.com/pwndbg/pwndbg"&gt;pwndbg&lt;/a&gt;, just to name a few. We can monitor execution via a debugger, and loop over execution by restarting the process.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;img alt="alt-text" src="resources/ROP-Chain-Integrity.png" title="ROP Chain Integrity Algorithm"&gt;
-&lt;strong&gt;&lt;em&gt;ROP Chain Integrity Algorithm Visualized&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="alt-text" src="resources/ROP-Chain-Integrity.png" title="ROP Chain Integrity Algorithm"&gt; 
+&lt;strong&gt;&lt;em&gt;ROP Chain Integrity Algorithm Iterations Visualized&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The above image depicts the ROP chain integrity algorithm in action. This image is using the same ROP chain previously discussed.&lt;/p&gt;
 &lt;p&gt;If we hit the breakpoint in the debugger on the first iteration we know that our ROP chain is still being executed, we also know the vulnerability still exists.&lt;/p&gt;
