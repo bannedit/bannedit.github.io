@@ -31,7 +31,8 @@ Return Oriented Programming is an exploitation technique that uses code that alr
 
  ROP chains are comprised of gadgets, or small chunks of code that are followed by a return instruction. These gadgets are chained together by manipulating stack memory and constructing stack frames.
 
- >![alt-text](resources/rop.png "Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow")**_Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: [https://devel0pment.de/?p=366](https://devel0pment.de/?p=366)_**
+ >![alt-text](resources/rop.png "Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow"
+ **_Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: [https://devel0pment.de/?p=366](https://devel0pment.de/?p=366)_**
 
 The above illustration depicts the stack memory at the time of exploiting a stack based buffer overflow. As can be seen a ROP chain is simply a chain of gadgets that reference code already existing in the vulnerable process. In this instance the ROP payload is building the arguments necessary to call the sys_execve system call on a 32bit Linux system. 
 
