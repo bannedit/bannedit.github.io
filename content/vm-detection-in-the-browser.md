@@ -22,7 +22,7 @@ The end goal of this research is to have multiple techniques for VM detection. M
 
 Now that I have covered some of the background information and history leading up to this blog post we can start to dig into the actual techniques.
 
-As mentioned prior in the introduction, WebGL can provide a lot of information about the OpenGL impelementation including vendor information. The WEBGL_debug_renderer_info extention [[2]](https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info) can be used to query for debug information such as the WebGL vendor and rendered.
+As mentioned prior in the introduction, WebGL can provide a lot of information about the OpenGL implementation including vendor information. The WEBGL_debug_renderer_info extension [[2]](https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_debug_renderer_info) can be used to query for debug information such as the WebGL vendor and rendered.
 
 ```javascript
 var canvas = document.createElement('canvas');
@@ -51,7 +51,7 @@ Now, it is important to note that this depends on how the VM is configured. In V
 This screenshot depicts Google Chrome utilizing the CPU based OpenGL implementation renderer Google SwiftShader [[4]](https://github.com/google/swiftshader).
 
 
-Another technique seen in normal malware is to determine the screen width and height. This can be achived in Javascript as well. Additionally, color depth and bits per pixel are other potentially good indicators related to the display.
+Another technique seen in normal malware is to determine the screen width and height. This can be achieved in Javascript as well. Additionally, color depth and bits per pixel are other potentially good indicators related to the display.
 
 ```javascript
 var width = screen.width;
@@ -62,13 +62,13 @@ var bitspp = screen.pixelDepth;
 
 More details on the screen object can be found at [[5]](https://www.w3schools.com/jsref/obj_screen.asp).
 
-Can we detect the amount of RAM on the client? You bet. Again using Javascript we can determine roughly the amount of RAM available on the browser. One quirk to note here is that the browser will only report RAM values in gigabytes (gb). It also has a quirk where it will only report upto 8gb and as low as 256mb (0.25gb). These ranges of values however, are still enough to use as a VM detection method. Most physical workstations these days come with at least 8gb of RAM. Detecting smaller amounts of RAM such as 2gb or less would be a good indicator the client browser is in a VM. The specification for the Device Memory can be found at [[6]](https://www.w3.org/TR/device-memory/)
+Can we detect the amount of RAM on the client? You bet. Again using Javascript we can determine roughly the amount of RAM available on the browser. One quirk to note here is that the browser will only report RAM values in gigabytes (gb). It also has a quirk where it will only report up to 8gb and as low as 256mb (0.25gb). These ranges of values however, are still enough to use as a VM detection method. Most physical workstations these days come with at least 8gb of RAM. Detecting smaller amounts of RAM such as 2gb or less would be a good indicator the client browser is in a VM. The specification for the Device Memory can be found at [[6]](https://www.w3.org/TR/device-memory/)
 
 ```javascript
 var ram = navigator.deviceMemory;
 ```
 
-Finally, the last technique I will be covering detects the number of CPU cores. This is done by performing timing attacks using multiple web workers running simultaniously. During my testing of this technique I found it to be very accurate. I tested this concept out using the [[7]](https://oswg.oftn.org/projects/core-estimator/demo/) Core Estimator Demo site. A small number of CPU cores can be a decent VM indicator and has been used by malware in the past. Core Estimator also provides the Javascript libraries on github [[8]](https://github.com/oftn-oswg/core-estimator).
+Finally, the last technique I will be covering detects the number of CPU cores. This is done by performing timing attacks using multiple web workers running simultaneously. During my testing of this technique I found it to be very accurate. I tested this concept out using the [[7]](https://oswg.oftn.org/projects/core-estimator/demo/) Core Estimator Demo site. A small number of CPU cores can be a decent VM indicator and has been used by malware in the past. Core Estimator also provides the Javascript libraries on github [[8]](https://github.com/oftn-oswg/core-estimator).
 
 >![alt-text](resources/VirtualBox-VM-Win10-Chrome-2-Cores.png "VirtualBox Windows 10 x64 VM Chrome With 2 CPU Cores")
 **_VirtualBox Windows 10 x64 VM Google Chrome 2 CPU Cores Tested with Core Estimator_**
