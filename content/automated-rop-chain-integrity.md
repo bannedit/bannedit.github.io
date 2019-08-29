@@ -1,5 +1,5 @@
 Title: Automated ROP Chain Integrity
-Date: 2019-08-29 5:13
+Date: 2019-08-29 17:13
 Category: Research
 Tags: research, rop, exploit dev
 Slug: Automated-ROP-Chain-Integrity
