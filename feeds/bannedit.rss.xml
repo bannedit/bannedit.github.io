@@ -12,7 +12,8 @@
 &lt;p&gt;Return Oriented Programming is an exploitation technique that uses code that already exists within an application to perform useful actions. Typically, a ROP chain will simply change the protection flags on a page of memory to be executable. Alternatively, some ROP chains might allocate memory as executable and copy shellcode into the allocated memory. However, a ROP chain can perform any action that can be constructed from the code within the target process.&lt;/p&gt;
 &lt;p&gt;ROP chains are comprised of gadgets, or small chunks of code that are followed by a return instruction. These gadgets are chained together by manipulating stack memory and constructing stack frames.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;img alt="alt-text" src="resources/rop.png" title="Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow"&gt;&lt;strong&gt;&lt;em&gt;Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: &lt;a href="https://devel0pment.de/?p=366"&gt;https://devel0pment.de/?p=366&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;![alt-text](resources/rop.png "Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow"
+ &lt;strong&gt;&lt;em&gt;Stack Layout Before and After Exploitation of a Stack Based Buffer Overflow - image source: &lt;a href="https://devel0pment.de/?p=366"&gt;https://devel0pment.de/?p=366&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The above illustration depicts the stack memory at the time of exploiting a stack based buffer overflow. As can be seen a ROP chain is simply a chain of gadgets that reference code already existing in the vulnerable process. In this instance the ROP payload is building the arguments necessary to call the sys_execve system call on a 32bit Linux system. &lt;/p&gt;
 &lt;p&gt;The gadgets:
